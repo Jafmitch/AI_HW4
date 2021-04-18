@@ -10,7 +10,7 @@ import numpy as np
 
 # derivative of the activation function used in the neural network
 AF_PRIME = af.activationPrime
-LEARNING_RATE = 5e-5
+LEARNING_RATE = 5e-3
 
 def backprop(nn, y):
     """

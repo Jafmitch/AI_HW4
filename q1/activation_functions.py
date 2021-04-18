@@ -16,11 +16,7 @@ def activation(xArray):
     Returns:
         ndarray: Array of y values.
     """
-    s = xArray.shape
-    one_matrix = np.ones(s)
-    e = np.exp(-xArray)
-    don = np.add(one_matrix, e)
-    return 1 / don
+    return 1 / (1 + np.exp(-xArray))
 
 def activationPrime(xArray):
     """
@@ -32,8 +28,7 @@ def activationPrime(xArray):
     Returns:
         np.ndarray: Array of y values in nx1 form.
     """
+    #return np.where(xArray > 0, 1.0, 0.0)
     f = activation(xArray=xArray)
-    s = xArray.shape
-    one_matrix = np.ones(s)
-    f2 = np.subtract(one_matrix, f)
+    f2 = np.subtract(1, f)
     return np.multiply(f, f2)
