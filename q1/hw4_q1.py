@@ -8,14 +8,17 @@ import forward_propagation as fp
 import graph_wrapper as gw
 import neuron_layer as nl
 import numpy as np
+import torch
+from torch import nn
 
-TILE_SIZE = 10
-TEST_FRAC = 0.1
-HIDDEN_DIM = 5
+TILE_SIZE = 14
+TEST_NUM = 10
+HIDDEN_DIM = 7
 END = 1
+I_MAX = 100000
 INPUT_DIM = 2
 LEARNING_RATE = bp.LEARNING_RATE
-N_LAYER = 4  # number of Neuron layers
+N_LAYER = 3  # number of Neuron layers
 OUTPUT_DIM = 1
 
 
@@ -91,28 +94,34 @@ def sepDate(image):
             np.ndarray: test_input is the testing input, which is a 2 by 1 matrix of x and y coordinates
             np.ndarray: test_output is the testing output
     """
-    values = []
-    known = np.array([])
+    #break up date to inputs and outputs
+    input_data = []
+    output_data = []
     for i in range(0, TILE_SIZE):
         for j in range(0, TILE_SIZE):
-            tmp = np.matrix([[i], [j]])
-            values.append(tmp)
-            del tmp
-            known = np.append(known, image[i, j])
+            tmp = np.matrix([[i], [j]], dtype=float)
+            input_data.append(tmp)
+            output_data.append(image[i, j])
 
-    values = np.array(values)
-    stop = known.size + 1
-    test_size = round(stop * TEST_FRAC)
-    test_sample = np.random.randint(0, stop, test_size)
+    #randomly break up data into train and test data
+    stop = len(output_data)
+    test_sample = np.random.choice(range(stop), TEST_NUM, replace=False)
+    train_input = []
+    train_output = []
     test_input = []
-    test_output = np.array([])
-    test_output = np.append(test_output, known[test_sample])
-    known = np.delete(known, test_sample)
-    for i in test_sample:
-        test_input.append(values[i])
-    values = np.delete(values, test_sample)
+    test_output = []
+    for i in range(0, stop):
+        if i in test_sample:
+            test_input.append(input_data[i])
+            test_output.append(output_data[i])
+        else:
+            train_input.append(input_data[i])
+            train_output.append(output_data[i])
+    train_input = np.array(train_input)
+    train_output = np.array(train_output)
     test_input = np.array(test_input)
-    return values, known, test_input, test_output
+    test_output = np.array(test_output)
+    return train_input, train_output, test_input, test_output
 
 
 def trainANN(ann, know, values):
@@ -130,10 +139,8 @@ def trainANN(ann, know, values):
     # Feed in each input value into both forward propagation and back propagatio
     batch = know.size
     loss = batch
-    past = batch + 1
     k = 0
-    knockOut = 0
-    while loss > END and knockOut < 15:
+    while loss > END and k < I_MAX:
         loss_arr = np.array([])
         for i in range(batch):
             ann[0].input_value = values[i]
@@ -149,16 +156,26 @@ def trainANN(ann, know, values):
         costs.append(loss)
         if k % 1000 == 0:
             print(k, loss)
-            if past < loss:
-                knockOut += 1
-            else:
-                knockOut = 0
-                past = loss
         k += 1
         del loss_arr
     print("final lost", k, loss)
     return costs
 
+
+def torchTrain(train_input, train_output):
+    #Testing still...
+    train_input = torch.Tensor(train_input)
+    train_output = torch.Tensor(train_output)
+    seq_modules = nn.Sequential(
+        nn.Flatten(),
+        nn.Linear(in_features=2, out_features=90),
+        nn.ReLU(),
+        nn.Linear(90, 1),
+        nn.ReLU(),
+        nn.Linear(1, 1)
+    )
+    logits = seq_modules(train_input)
+    print(logits.size())
 
 def testANN(ann, know, values):
     """

@@ -28,7 +28,6 @@ def activationPrime(xArray):
     Returns:
         np.ndarray: Array of y values in nx1 form.
     """
-    #return np.where(xArray > 0, 1.0, 0.0)
     f = activation(xArray=xArray)
     f2 = np.subtract(1, f)
     return np.multiply(f, f2)
