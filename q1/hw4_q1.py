@@ -3,98 +3,81 @@
 - Author: Jason A. F. Mitchell, Jarod Osborn, and Eric Tulowetzke
 - Summary: This is the main module for homework 4 problem 1.
 """
-import backward_propagation as bp
-import forward_propagation as fp
+
 import graph_wrapper as gw
-import neuron_layer as nl
+import matplotlib.pyplot as plt
 import numpy as np
 import torch
 from torch import nn
+import helper_functions as hf
 
-TILE_SIZE = 14
-TEST_NUM = 10
-HIDDEN_DIM = 7
-END = 1
-I_MAX = 100000
-INPUT_DIM = 2
-LEARNING_RATE = bp.LEARNING_RATE
-N_LAYER = 3  # number of Neuron layers
-OUTPUT_DIM = 1
+TILE_SIZE = 13
+TEST_SIZE = 17  # Number of sample randomly removed for testing set
+HIDDEN_LAYER = 17  # Number of dimensions a hidden layer will have
+END = 0.1  # And condition for training loop
+LEARNING_RATE = 5e-3
+TRAIL = 100
 
 
 def main():
     """
     The main function of this module.
     """
-    ann = buildPerceptron(N_LAYER, INPUT_DIM, HIDDEN_DIM, OUTPUT_DIM)
-    image = heatFlowCA()
-    train_input, train_output, test_input, test_output = sepDate(image=image)
-    trainANN(ann, train_output, train_input)
-    print(testANN(ann, test_output, test_input))
+    result = []
+    image = heatFlowCA(5)
+    for i in range(TRAIL):
+        print('Trail', i)
+        train_input, train_output, test_input, test_output = sepDate(image=image)
+        train_model, cost = torchTrain(train_input, train_output)
+        result.append(torchTest(train_model, test_input, test_output))
+        print(result[i])
+        graphCosts(cost, i)
+    graphCorrectAnswers(result)
+    result = np.array(result)
+    print('mean', np.mean(result), 'std', np.std(result))
 
 
-def buildPerceptron(layers, i, h, o):
+def heatFlowCA(scale):
     """
-    This function creates an artificial neural network multi-layer perceptron
-    using the NeuronLayer object.
-
+    This function creates an cellular automaton of heat flow on a square
     Args:
-        layers (int): number of layers in the perceptron
-        n ([type]): n dimension of the perceptron
-        m ([type]): m dimension of the perceptron
-
+        scale: int that help determines how long CA evaluates for
     Returns:
-        np.ndarray: array of NeuronLayers representing the perceptron
+        np.ndarray: 2D array of what heat is on TILE_SIZE by TILE_SIZE plate
     """
-    perceptron = np.array([])
-    for l in range(layers):
-        if l == 0:
-            tmp = nl.NeuronLayer(h, i)
-        elif l == (layers - 1):
-            tmp = nl.NeuronLayer(o, h)
-        else:
-            tmp = nl.NeuronLayer(h, h)
-        perceptron = np.append(perceptron, tmp)
-    return perceptron
-
-
-def heatFlowCA():
-    """
-        This function creates an cellular automaton of heat flow on a square
-
-        Returns:
-            np.ndarray: 2D array of what heat is on TILE_SIZE by TILE_SIZE plate
-        """
     image = np.zeros((TILE_SIZE, TILE_SIZE))
     buffer = np.zeros((TILE_SIZE, TILE_SIZE))
     for i in range(1, TILE_SIZE - 1):
         image[i, TILE_SIZE - 1] = i * (TILE_SIZE - 1 - i)
 
-    for t in range(5 * TILE_SIZE):
+    for t in range(scale * TILE_SIZE):
         for i in range(1, TILE_SIZE - 1):
             for j in range(1, TILE_SIZE - 1):
                 buffer[i, j] = (image[i - 1, j] + image[i + 1, j] + image[i, j - 1] + image[i, j + 1]) / 4.0
         for i in range(1, TILE_SIZE - 1):
             for j in range(1, TILE_SIZE - 1):
                 image[i, j] = buffer[i, j]
+
+    fig, ax = plt.subplots()
+    ax.imshow(image, cmap=plt.cm.gray, interpolation='nearest')
+    plt.savefig("images/heatflow2.jpg")
+    plt.clf()
     return image
 
 
 def sepDate(image):
     """
-        This function Sports the CA results into inputs and outputs,
-        then splits up the data more into training versus testing data.
-
-        Args:
-            np.ndarray: 2D array of what heat is on TILE_SIZE by TILE_SIZE plate
-
-        Returns:
-            np.ndarray: values is the training input, which is a 2 by 1 matrix of x and y coordinates
-            np.ndarray: known is the training output
-            np.ndarray: test_input is the testing input, which is a 2 by 1 matrix of x and y coordinates
-            np.ndarray: test_output is the testing output
+    This function Sports the CA results into inputs and outputs,
+    then splits up the data more into training versus testing data.
+    Args:
+        np.ndarray: 2D array of what heat is on TILE_SIZE by TILE_SIZE plate
+    Returns:
+        torch.Tensor: values is the training input, which is a 2 by 1 matrix of x and y coordinates
+        torch.Tensor: known is the training output
+        torch.Tensor: test_input is the testing input, which is a 2 by 1 matrix of x and y coordinates
+        torch.Tensor: test_output is the testing output
     """
-    #break up date to inputs and outputs
+    # break up date to inputs and outputs
     input_data = []
     output_data = []
     for i in range(0, TILE_SIZE):
@@ -103,9 +86,9 @@ def sepDate(image):
             input_data.append(tmp)
             output_data.append(image[i, j])
 
-    #randomly break up data into train and test data
+    # randomly break up data into train and test data
     stop = len(output_data)
-    test_sample = np.random.choice(range(stop), TEST_NUM, replace=False)
+    test_sample = np.random.choice(range(stop), TEST_SIZE, replace=False)
     train_input = []
     train_output = []
     test_input = []
@@ -118,90 +101,110 @@ def sepDate(image):
             train_input.append(input_data[i])
             train_output.append(output_data[i])
     train_input = np.array(train_input)
-    train_output = np.array(train_output)
+    train_output = hf.T1D(np.array(train_output))
     test_input = np.array(test_input)
-    test_output = np.array(test_output)
+    test_output = hf.T1D(np.array(test_output))
+    train_input = torch.Tensor(train_input)
+    train_output = torch.Tensor(train_output)
+    test_input = torch.Tensor(test_input)
+    test_output = torch.Tensor(test_output)
     return train_input, train_output, test_input, test_output
 
 
-def trainANN(ann, know, values):
-    """
-    This function trains the neural network by feeding it training data and
-    adjusting its weights according to a calculated gradient.
-
-    Args:
-        ann (np.ndarray): An artificial neural network represented by an array
-                          or NeuronLayer objects
-    Returns:
-        list: list of the cost of each iteration
-    """
-    costs = []
-    # Feed in each input value into both forward propagation and back propagatio
-    batch = know.size
-    loss = batch
-    k = 0
-    while loss > END and k < I_MAX:
-        loss_arr = np.array([])
-        for i in range(batch):
-            ann[0].input_value = values[i]
-        # Collect the square difference of each pair
-            sqdiff = fp.forward_network(ann, know[i])
-            loss_arr = np.append(loss_arr, sqdiff)
-            bp.backprop(ann, know[i])
-        # Finish Average and the sum gradients and edit Weights
-        for i in range(N_LAYER):
-            ann[i].w -= ann[i].dCdw_sum/batch * LEARNING_RATE
-            ann[i].zero_out()
-        loss = loss_arr.sum() / batch
-        costs.append(loss)
-        if k % 1000 == 0:
-            print(k, loss)
-        k += 1
-        del loss_arr
-    print("final lost", k, loss)
-    return costs
-
-
 def torchTrain(train_input, train_output):
-    #Testing still...
-    train_input = torch.Tensor(train_input)
-    train_output = torch.Tensor(train_output)
-    seq_modules = nn.Sequential(
+    """
+    This function builds the ANN model,
+    along with also training the model using training data that is passed in
+    Args:
+        train_input: pytorch Tensor of N X 2 of input of x and y values
+        train_output: pytorch Tensor of N X 1 of know outputs
+            N = TILE_SIZE^2 - TEST_SIZE
+    Returns:
+            model: pytorch trained ANN
+            cost: python array of loss value for each iteration of the training loop
+     """
+    model = nn.Sequential(
         nn.Flatten(),
-        nn.Linear(in_features=2, out_features=90),
-        nn.ReLU(),
-        nn.Linear(90, 1),
-        nn.ReLU(),
+        nn.Linear(in_features=2, out_features=HIDDEN_LAYER),
+        nn.Sigmoid(),
+        nn.Linear(HIDDEN_LAYER, HIDDEN_LAYER),
+        nn.Sigmoid(),
+        nn.Linear(HIDDEN_LAYER, HIDDEN_LAYER),
+        nn.Sigmoid(),
+        nn.Linear(HIDDEN_LAYER, 1),
+        nn.Sigmoid(),
         nn.Linear(1, 1)
     )
-    logits = seq_modules(train_input)
-    print(logits.size())
+    loss_fn = nn.MSELoss()
+    optimizer = torch.optim.SGD(model.parameters(), lr=LEARNING_RATE)
+    loss = 1e+5
+    cost = []
+    while loss > END:
+        # Forward propagation
+        pred = model(train_input)
+        loss = loss_fn(pred, train_output)
+        # Back propagation
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+        cost.append(loss.detach())
+    return model, cost
 
-def testANN(ann, know, values):
-    """
-        This function tests how good the artificial neural network is compared to the testing data.
-        It will print the percentage of correct answers.
 
-        Args:
-            ann(array of Neuron layer class):
-        Returns:
-            float: number of correct values calculated by the ANN
+def torchTest(model, test_input, test_output):
     """
-    total = know.size
+    This function tests how good the artificial neural network is compared to the testing data.
+    It will print the percentage of correct answers.
+    Args:
+        model: pytorch trained ANN
+        test_input: pytorch Tensor of TEST_SIZE X 2 of input of x and y values
+        test_output: pytorch Tensor of TEST_SIZE X 1 of know outputs
+    Returns:
+        float: number of correct values calculated by the ANN
+    """
     check = 0
-    for j in range(total):
-        ann[0].input_value = values[j]
-        fp.forward_network(ann, know[j])
-        guess = np.around(ann[N_LAYER - 1].a[0])
-        pred = round(know[j])
-        #print(j, "guess", guess)
-        #print(j, "know", pred)
-        if guess == pred:
+    pred = model(test_input)
+    for j in range(TEST_SIZE):
+        guess = torch.round(pred[j])
+        answer = torch.round(test_output[j])
+        if guess == answer:
             check += 1
     print("Number right", check)
-    # print("Total data points", layer)
-    # print("testpercentage ", check / layer)
-    return check / total
+    return check / TEST_SIZE
+
+
+def graphCorrectAnswers(percentCorrectAnswers):
+    """
+    Creates a graph of the percent correct answers per trial.
+    Args:
+        percentCorrectAnswers (list): list of percentCorrectAnswers per trial.
+    """
+    plot = gw.Plot()
+    for i in range(len(percentCorrectAnswers)):
+        plot.addPoint(i, percentCorrectAnswers[i], "o", "purple")
+
+    plot.label("Percent Answers Correct per Trial",
+               "Trial", "Percent of Answers Correct ")
+    plot.save("correct_answers.jpg")
+    plot.freeze()
+
+
+def graphCosts(costs, number=0):
+    """
+    Creates a graph of the cost function results per iteration.
+    Args:
+        costs (list): List of cost function results per iteration.
+        number (int): Number assigned to graph when doing multiple
+                      trials. Default is 0.
+    """
+    plot = gw.Plot()
+    plot.pointplot(range(len(costs)), costs, "blue")
+
+    plot.label("Cost per Iteration",
+               "Iteration Number", "Cost")
+    plot.save("cost_per_iteration_trial" + str(number) +".jpg")
+    plot.freeze()
+
 
 if __name__ == "__main__":
     main()
