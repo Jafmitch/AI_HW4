@@ -1,301 +1,301 @@
 Trail 0
-Number right 17
-1.0
+Number right 38
+0.95
 Trail 1
-Number right 14
-0.8235294117647058
+Number right 37
+0.925
 Trail 2
-Number right 9
-0.5294117647058824
+Number right 38
+0.95
 Trail 3
-Number right 11
-0.6470588235294118
+Number right 35
+0.875
 Trail 4
-Number right 16
-0.9411764705882353
+Number right 38
+0.95
 Trail 5
-Number right 16
-0.9411764705882353
+Number right 38
+0.95
 Trail 6
-Number right 15
-0.8823529411764706
+Number right 37
+0.925
 Trail 7
-Number right 14
-0.8235294117647058
+Number right 39
+0.975
 Trail 8
-Number right 15
-0.8823529411764706
+Number right 39
+0.975
 Trail 9
-Number right 15
-0.8823529411764706
+Number right 40
+1.0
 Trail 10
-Number right 14
-0.8235294117647058
+Number right 39
+0.975
 Trail 11
-Number right 14
-0.8235294117647058
+Number right 37
+0.925
 Trail 12
-Number right 14
-0.8235294117647058
+Number right 38
+0.95
 Trail 13
-Number right 9
-0.5294117647058824
+Number right 38
+0.95
 Trail 14
-Number right 9
-0.5294117647058824
+Number right 37
+0.925
 Trail 15
-Number right 12
-0.7058823529411765
+Number right 35
+0.875
 Trail 16
-Number right 15
-0.8823529411764706
+Number right 38
+0.95
 Trail 17
-Number right 12
-0.7058823529411765
+Number right 39
+0.975
 Trail 18
-Number right 13
-0.7647058823529411
+Number right 40
+1.0
 Trail 19
-Number right 12
-0.7058823529411765
+Number right 39
+0.975
 Trail 20
-Number right 15
-0.8823529411764706
+Number right 37
+0.925
 Trail 21
-Number right 16
-0.9411764705882353
+Number right 37
+0.925
 Trail 22
-Number right 14
-0.8235294117647058
+Number right 39
+0.975
 Trail 23
-Number right 17
-1.0
+Number right 38
+0.95
 Trail 24
-Number right 14
-0.8235294117647058
+Number right 35
+0.875
 Trail 25
-Number right 14
-0.8235294117647058
+Number right 36
+0.9
 Trail 26
-Number right 14
-0.8235294117647058
+Number right 36
+0.9
 Trail 27
-Number right 15
-0.8823529411764706
+Number right 36
+0.9
 Trail 28
-Number right 15
-0.8823529411764706
+Number right 38
+0.95
 Trail 29
-Number right 13
-0.7647058823529411
+Number right 38
+0.95
 Trail 30
-Number right 13
-0.7647058823529411
+Number right 39
+0.975
 Trail 31
-Number right 11
-0.6470588235294118
+Number right 35
+0.875
 Trail 32
-Number right 10
-0.5882352941176471
+Number right 40
+1.0
 Trail 33
-Number right 16
-0.9411764705882353
+Number right 38
+0.95
 Trail 34
-Number right 16
-0.9411764705882353
+Number right 37
+0.925
 Trail 35
-Number right 13
-0.7647058823529411
+Number right 38
+0.95
 Trail 36
-Number right 14
-0.8235294117647058
+Number right 39
+0.975
 Trail 37
-Number right 14
-0.8235294117647058
+Number right 36
+0.9
 Trail 38
-Number right 13
-0.7647058823529411
+Number right 36
+0.9
 Trail 39
-Number right 11
-0.6470588235294118
+Number right 37
+0.925
 Trail 40
-Number right 13
-0.7647058823529411
+Number right 36
+0.9
 Trail 41
-Number right 15
-0.8823529411764706
+Number right 38
+0.95
 Trail 42
-Number right 12
-0.7058823529411765
+Number right 38
+0.95
 Trail 43
-Number right 17
-1.0
+Number right 36
+0.9
 Trail 44
-Number right 11
-0.6470588235294118
+Number right 37
+0.925
 Trail 45
-Number right 12
-0.7058823529411765
+Number right 38
+0.95
 Trail 46
-Number right 13
-0.7647058823529411
+Number right 37
+0.925
 Trail 47
-Number right 11
-0.6470588235294118
+Number right 37
+0.925
 Trail 48
-Number right 13
-0.7647058823529411
+Number right 36
+0.9
 Trail 49
-Number right 14
-0.8235294117647058
+Number right 36
+0.9
 Trail 50
-Number right 12
-0.7058823529411765
+Number right 37
+0.925
 Trail 51
-Number right 17
-1.0
+Number right 38
+0.95
 Trail 52
-Number right 14
-0.8235294117647058
+Number right 38
+0.95
 Trail 53
-Number right 10
-0.5882352941176471
+Number right 38
+0.95
 Trail 54
-Number right 14
-0.8235294117647058
+Number right 39
+0.975
 Trail 55
-Number right 15
-0.8823529411764706
+Number right 36
+0.9
 Trail 56
-Number right 14
-0.8235294117647058
+Number right 38
+0.95
 Trail 57
-Number right 13
-0.7647058823529411
+Number right 38
+0.95
 Trail 58
-Number right 11
-0.6470588235294118
+Number right 37
+0.925
 Trail 59
-Number right 13
-0.7647058823529411
+Number right 35
+0.875
 Trail 60
-Number right 15
-0.8823529411764706
+Number right 40
+1.0
 Trail 61
-Number right 14
-0.8235294117647058
+Number right 39
+0.975
 Trail 62
-Number right 16
-0.9411764705882353
+Number right 38
+0.95
 Trail 63
-Number right 13
-0.7647058823529411
+Number right 35
+0.875
 Trail 64
-Number right 14
-0.8235294117647058
+Number right 38
+0.95
 Trail 65
-Number right 11
-0.6470588235294118
+Number right 36
+0.9
 Trail 66
-Number right 14
-0.8235294117647058
+Number right 37
+0.925
 Trail 67
-Number right 16
-0.9411764705882353
+Number right 37
+0.925
 Trail 68
-Number right 15
-0.8823529411764706
+Number right 38
+0.95
 Trail 69
-Number right 14
-0.8235294117647058
+Number right 38
+0.95
 Trail 70
-Number right 14
-0.8235294117647058
+Number right 36
+0.9
 Trail 71
-Number right 12
-0.7058823529411765
+Number right 37
+0.925
 Trail 72
-Number right 11
-0.6470588235294118
+Number right 38
+0.95
 Trail 73
-Number right 15
-0.8823529411764706
+Number right 38
+0.95
 Trail 74
-Number right 13
-0.7647058823529411
+Number right 35
+0.875
 Trail 75
-Number right 13
-0.7647058823529411
+Number right 40
+1.0
 Trail 76
-Number right 14
-0.8235294117647058
+Number right 38
+0.95
 Trail 77
-Number right 14
-0.8235294117647058
+Number right 38
+0.95
 Trail 78
-Number right 12
-0.7058823529411765
+Number right 37
+0.925
 Trail 79
-Number right 14
-0.8235294117647058
+Number right 38
+0.95
 Trail 80
-Number right 15
-0.8823529411764706
+Number right 40
+1.0
 Trail 81
-Number right 15
-0.8823529411764706
+Number right 37
+0.925
 Trail 82
-Number right 14
-0.8235294117647058
+Number right 40
+1.0
 Trail 83
-Number right 9
-0.5294117647058824
+Number right 36
+0.9
 Trail 84
-Number right 10
-0.5882352941176471
+Number right 37
+0.925
 Trail 85
-Number right 13
-0.7647058823529411
+Number right 39
+0.975
 Trail 86
-Number right 9
-0.5294117647058824
+Number right 40
+1.0
 Trail 87
-Number right 15
-0.8823529411764706
+Number right 39
+0.975
 Trail 88
-Number right 14
-0.8235294117647058
+Number right 36
+0.9
 Trail 89
-Number right 15
-0.8823529411764706
+Number right 39
+0.975
 Trail 90
-Number right 9
-0.5294117647058824
+Number right 37
+0.925
 Trail 91
-Number right 14
-0.8235294117647058
+Number right 39
+0.975
 Trail 92
-Number right 14
-0.8235294117647058
+Number right 38
+0.95
 Trail 93
-Number right 12
-0.7058823529411765
+Number right 38
+0.95
 Trail 94
-Number right 13
-0.7647058823529411
+Number right 40
+1.0
 Trail 95
-Number right 13
-0.7647058823529411
+Number right 37
+0.925
 Trail 96
-Number right 12
-0.7058823529411765
+Number right 37
+0.925
 Trail 97
-Number right 13
-0.7647058823529411
+Number right 37
+0.925
 Trail 98
-Number right 13
-0.7647058823529411
+Number right 39
+0.975
 Trail 99
-Number right 12
-0.7058823529411765
-mean 0.7858823529411765 std 0.1133082270855012
+Number right 38
+0.95
+mean 0.9402499999999999 std 0.033334479146973316

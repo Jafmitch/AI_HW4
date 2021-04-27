@@ -11,11 +11,11 @@ import torch
 from torch import nn
 import helper_functions as hf
 
-TILE_SIZE = 13
-TEST_SIZE = 17  # Number of sample randomly removed for testing set
-HIDDEN_LAYER = 17  # Number of dimensions a hidden layer will have
-END = 0.1  # And condition for training loop
-LEARNING_RATE = 5e-3
+TILE_SIZE = 20
+TEST_SIZE = 40  # Number of sample randomly removed for testing set
+HIDDEN_LAYER = 200  # Number of dimensions a hidden layer will have
+END = 0.01  # And condition for training loop
+LEARNING_RATE = 1e-3
 TRAIL = 100
 
 
@@ -129,14 +129,10 @@ def torchTrain(train_input, train_output):
         nn.Sigmoid(),
         nn.Linear(HIDDEN_LAYER, HIDDEN_LAYER),
         nn.Sigmoid(),
-        nn.Linear(HIDDEN_LAYER, HIDDEN_LAYER),
-        nn.Sigmoid(),
         nn.Linear(HIDDEN_LAYER, 1),
-        nn.Sigmoid(),
-        nn.Linear(1, 1)
     )
     loss_fn = nn.MSELoss()
-    optimizer = torch.optim.SGD(model.parameters(), lr=LEARNING_RATE)
+    optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE)
     loss = 1e+5
     cost = []
     while loss > END:
